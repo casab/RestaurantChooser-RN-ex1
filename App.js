@@ -1,19 +1,63 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Constants } from "expo";
+import { Image, Platform } from 'react-native';
+import { TabNavigator } from "react-navigation";
+import { PeopleScreen } from "./screens/PeopleScreen";
+import { DecisionScreen } from "./screens/DecisionScreen";
+import { RestaurantsScreen } from "./screens/RestaurantsScreen";
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-    </View>
-  );
-}
+console.log("------------------------------------------------------------");
+console.log(`RestaurantChooser starting on ${Platform.OS}`);
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+const platformOS = Platform.OS.toLowerCase();
+
+const tabs = TabNavigator(
+{
+  PeopleScreen: {
+    screen: PeopleScreen,
+    navigationOptions: {
+      tabBarLabel: "People",
+      tabBarIcon: ( { tintColor } ) => (
+          <Image source={ require("./images/icon-people.png")}
+                 style={{ width: 32, height:32, tintColor: tintColor }} />
+      )
+    }
+  }, /* End PeopleScreen */
+  DecisionScreen: {
+    screen: DecisionScreen,
+    navigationOptions: {
+      tabBarLabel: "Decision",
+      tabBarIcon: ( { tintColor } ) => (
+          <Image source={ require("./images/icon-decision.png")}
+                 style={{ width: 32, height:32, tintColor: tintColor}} />
+      )
+    }
+  }, /* End DecisionScreen */
+  RestaurantsScreen: {
+    screen: RestaurantsScreen,
+    navigationOptions: {
+      tabBarLabel: "Restaurants",
+      tabBarIcon: ( { tintColor } ) => (
+          <Image source={ require("./images/icon-restaurants.png")}
+                 style={{ width:32, height:32, tintColor: tintColor}} />
+      )
+    }
+  }  /* End RestaurantsScreen */
+}, /* End Routes */
+{
+  initialRouteName: "DecisionScreen",
+  animationEnabled: true,
+  swipeEnabled: true,
+  backBehavior: "none",
+  lazy: true,
+  tabBarPosition: platformOS === "android" ? "top" : "bottom",
+  tabBarOptions: {
+    activeTintColor: "#FF0000",
+    showIcon: true,
+    style: {
+      paddingTop: platformOS === "android" ? Constants.statusBarHeight: 0
+    }
+  }
+}); /* End Options */
+
+export default tabs;
