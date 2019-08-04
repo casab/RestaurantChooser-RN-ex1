@@ -1,7 +1,7 @@
 import React from 'react';
 import { Constants } from "expo";
 import { Image, Platform } from 'react-native';
-import { TabNavigator } from "react-navigation";
+import { createBottomTabNavigator } from "react-navigation";
 import { PeopleScreen } from "./screens/PeopleScreen";
 import { DecisionScreen } from "./screens/DecisionScreen";
 import { RestaurantsScreen } from "./screens/RestaurantsScreen";
@@ -11,7 +11,7 @@ console.log(`RestaurantChooser starting on ${Platform.OS}`);
 
 const platformOS = Platform.OS.toLowerCase();
 
-const tabs = TabNavigator(
+const tabs = createBottomTabNavigator(
 {
   PeopleScreen: {
     screen: PeopleScreen,
@@ -50,7 +50,7 @@ const tabs = TabNavigator(
   swipeEnabled: true,
   backBehavior: "none",
   lazy: true,
-  tabBarPosition: platformOS === "android" ? "top" : "bottom",
+  /*tabBarPosition: platformOS === "android" ? "top" : "bottom", */
   tabBarOptions: {
     activeTintColor: "#FF0000",
     showIcon: true,
